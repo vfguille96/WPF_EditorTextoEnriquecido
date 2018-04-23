@@ -1,11 +1,12 @@
-﻿<Window x:Name="winPrinc" x:Class="PROG_REL9_EJ13_Vera_G.MainWindow"
+<Window x:Name="winPrinc" x:Class="PROG_REL9_EJ13_Vera_G.MainWindow"
         xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-        Title="Notepad#" Height="350" Width="525" ResizeMode="CanMinimize" WindowState="Maximized">
+        Title="Notepad#" Height="558" Width="756" WindowState="Maximized">
 
     <Window.CommandBindings>
-        <CommandBinding Command="ApplicationCommands.Open" Executed="Abrir" />
-        <CommandBinding Command="ApplicationCommands.Save" Executed="Guardar" />
+        <CommandBinding Command="Open" Executed="Abrir" />
+        <CommandBinding Command="Save" Executed="Guardar" />
+        <CommandBinding Command="Print" Executed="Imprimir"/>
     </Window.CommandBindings>
 
     <Grid>
@@ -21,18 +22,18 @@
             <Separator Width="10"></Separator>
             <MenuItem>
                 <MenuItem.Header>Edición</MenuItem.Header>
-                <Separator Width="10"></Separator>
-                <MenuItem>
-                    <MenuItem.Header>Ver</MenuItem.Header>
-                </MenuItem>
-                <Separator Width="10"></Separator>
-                <MenuItem>
-                    <MenuItem.Header>Ayuda</MenuItem.Header>
-                </MenuItem>
+                <MenuItem Header="_Copiar" Command="Copy" Margin="5,0"/>
+                <MenuItem Header="Cortar" Command="Cut" Margin="5,0"/>
+                <MenuItem Header="Pegar" Command="Paste" Margin="5,0"/>
+            </MenuItem>
+            <Separator Width="10"></Separator>
+            <MenuItem>
+                <MenuItem.Header>Ayuda</MenuItem.Header>
+                <MenuItem Header="Acerca de..." Margin="5,0"/>
             </MenuItem>
         </Menu>
 
-        <RichTextBox x:Name="rtxTexto" HorizontalAlignment="Left" VerticalAlignment="Stretch" Margin="0,45,0,21" SelectionChanged="rtxTexto_SelectionChanged">
+        <RichTextBox x:Name="rtxTexto" HorizontalAlignment="Left" VerticalAlignment="Stretch" Margin="0,45,0,21" SelectionChanged="rtxTexto_SelectionChanged" KeyDown="rtxTexto_KeyDown" ScrollViewer.VerticalScrollBarVisibility="Auto">
             <FlowDocument>
                 <Paragraph>
                     Texto por defecto
@@ -41,26 +42,20 @@
             </FlowDocument>
         </RichTextBox>
         <Rectangle Fill="#FFF4F4F5" HorizontalAlignment="Stretch" Height="1" Margin="0,22,0,0" Stroke="Black" VerticalAlignment="Top"/>
-        <Rectangle Stroke="Black" Fill="Gainsboro" VerticalAlignment="Bottom" HorizontalAlignment="Stretch" Height="21"/>
-        <Grid HorizontalAlignment="Left" VerticalAlignment="Top" Height="22" Margin="0,23,0,0">
-            <ToggleButton x:Name="btnN" Command="EditingCommands.ToggleBold" Content="N" Height="22" Width="22" FontWeight="Bold"/>
-            <ToggleButton x:Name="btnS" Command="EditingCommands.ToggleUnderline" Content="S" Height="22" Width="22" FontWeight="Bold" Margin="22,0,-22,0"/>
-            <ToggleButton x:Name="btnI" Command="EditingCommands.ToggleItalic" Content="I" Height="22" Width="22" FontWeight="Bold" Margin="56,0,-33,0" FontStyle="Italic" HorizontalAlignment="Left"/>
+        <!--StatusBar-->       
+        <StatusBar VerticalAlignment="Bottom" Height="22" BorderBrush="Black" BorderThickness="1"/>
+        <Label Name="lblStatus" VerticalAlignment="Bottom" Content="Palabras:       Caracteres:  " FontSize="11"/>
+        <Grid HorizontalAlignment="Left" VerticalAlignment="Top" Height="22" Margin="0,23,0,0" FocusManager.IsFocusScope="True" Width="46" >
+            <ToggleButton x:Name="btnN" Command="EditingCommands.ToggleBold" Content="N" Height="22" Width="22" FontWeight="Bold" ToolTip="Negrita"/>
+            <ToggleButton x:Name="btnS" Command="EditingCommands.ToggleUnderline" Content="S" Height="22" Width="22" FontWeight="Bold" Margin="22,0,-22,0" ToolTip="Subrayado"/>
+            <ToggleButton x:Name="btnI" Command="EditingCommands.ToggleItalic" Content="I" Height="22" Width="22" FontWeight="Bold" Margin="56,0,-33,0" FontStyle="Italic" HorizontalAlignment="Left" ToolTip="Cursiva"/>
             <TextBlock Text="Tamaño:" Margin="86,0,-86,0" VerticalAlignment="Center"/>
-            <ComboBox x:Name="cmbTamanos" Margin="135,0,-161,0" SelectionChanged="cmbTamanos_SelectionChanged">
-            </ComboBox>
-
+            <ComboBox x:Name="cmbTamanos" Margin="137,0,-163,0" SelectionChanged="cmbTamanos_SelectionChanged"/>
             <TextBlock Text="Fuente:" Margin="230,3,-228,0" VerticalAlignment="Center" Height="19"/>
-            <ComboBox x:Name="cmbFuentes" Margin="272,0,-347,0" SelectionChanged="cmbFuentes_SelectionChanged">
-                <!--
-                <ComboBoxItem>Arial</ComboBoxItem>
-                <ComboBoxItem>Times New Roman</ComboBoxItem>
-                <ComboBoxItem>Consolas</ComboBoxItem>
-                
-                FontSize="{Binding Path=SelectedItem.Content, ElementName=cmbSizes}" FontFamily="{Binding Path=SelectedItem, ElementName=cmbFuentes}"
-                -->
-            </ComboBox>
-        </Grid>
+            <ComboBox x:Name="cmbFuentes" Margin="274,0,-349,0" SelectionChanged="cmbFuentes_SelectionChanged"/>
 
+            <TextBlock Text="Colores:" Margin="440,3,-438,0" VerticalAlignment="Center" Height="19"/>
+            <ComboBox x:Name="cmbColores" Margin="489,0,-564,0" SelectionChanged="cmbColores_SelectionChanged"/>
+        </Grid>
     </Grid>
 </Window>
